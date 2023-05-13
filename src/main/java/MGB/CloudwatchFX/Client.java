@@ -55,7 +55,6 @@ public class Client
 					.asJson();
 			
 			System.out.println("Didn't find in SQL");
-			System.out.println(response.getBody());
 			return(response.getBody());
 		}
 	}
@@ -79,7 +78,6 @@ public class Client
 					.asJson();
 			
 			System.out.println("Didn't find in SQL");
-			System.out.println(response.getBody());
 			return(response.getBody());
 		}
 	}
@@ -110,13 +108,13 @@ public class Client
 		
 			else 
 			{
-				HttpResponse<String> name_response = Unirest.get("https://ai-weather-by-meteosource.p.rapidapi.com/find_places?text=" + input + "&language=en")
+				HttpResponse<String> response = Unirest.get("https://ai-weather-by-meteosource.p.rapidapi.com/find_places?text=" + input + "&language=en")
 						.header("X-RapidAPI-Key", "69273f24bfmsh45bc1a50d2ce3b0p1954b4jsn042d58a23a2d")
 						.header("X-RapidAPI-Host", "ai-weather-by-meteosource.p.rapidapi.com")
 						.asString();
 				
-				System.out.println(name_response.getBody());
-				return("not implemented yet");
+				System.out.println("New town...");
+				return(response.getBody());
 		
 			}
 		}
