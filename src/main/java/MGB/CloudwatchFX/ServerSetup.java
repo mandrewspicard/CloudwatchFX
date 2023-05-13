@@ -36,7 +36,7 @@ public class ServerSetup
         String url = "jdbc:sqlite:./src/main/resources/CloudData.db";
         
         // SQL statement for creating a new table
-        String sql = "create table IF NOT EXISTS hourlyData (\n"
+        String sql = "create table IF NOT EXISTS dailyData (\n"
         	    + "_id bigint PRIMARY KEY,\n"
         		+ "cityCode text NOT NULL,\n"
         	    + "data TEXT NOT NULL\n"
@@ -59,3 +59,4 @@ public class ServerSetup
     }
     
 }
+
