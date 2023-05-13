@@ -1,5 +1,7 @@
 package MGB.CloudwatchFX;
 
+import java.awt.*;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -71,7 +73,7 @@ public class App extends Application {
         // Set up the scene and show the stage
         Scene scene = new Scene(root, 400, 300);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("My GUI");
+        primaryStage.setTitle("Cloudwatch");
         primaryStage.show();
     }
 

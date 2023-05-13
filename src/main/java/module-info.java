@@ -3,5 +3,6 @@ module MGB.CloudwatchFX {
 	requires java.sql;
 	requires unirest.java;
 	requires json.simple;
+	requires java.desktop;
     exports MGB.CloudwatchFX;
 }
