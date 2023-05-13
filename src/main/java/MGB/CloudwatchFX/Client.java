@@ -17,7 +17,7 @@ public class Client
 	{		
 		if (checkSQLdaily(cityCode))
 		{
-			 ResultSet rs = stmt.executeQuery("select data from dailyData;");
+			 ResultSet rs = stmt.executeQuery("select * from dailyData;");
 			 JsonNode outputJson = new JsonNode(rs.getString("data"));
 			 System.out.print(outputJson);
 			 return outputJson;
@@ -41,7 +41,7 @@ public class Client
 	{		
 		if (checkSQLdaily(cityCode))
 		{
-			 ResultSet rs = stmt.executeQuery("select data from hourlyData;");
+			 ResultSet rs = stmt.executeQuery("select * from hourlyData;");
 			 JsonNode outputJson = new JsonNode(rs.getString("data"));
 			 System.out.print(outputJson);
 			 return outputJson;
@@ -64,7 +64,7 @@ public class Client
 	{		
 		if (checkSQLdaily(cityCode))
 		{
-			 ResultSet rs = stmt.executeQuery("select data from alerts;");
+			 ResultSet rs = stmt.executeQuery("select * from alerts;");
 			 JsonNode outputJson = new JsonNode(rs.getString("data"));
 			 System.out.print(outputJson);
 			 return outputJson;
@@ -156,8 +156,8 @@ public class Client
         
 		String cityCode = cityCodeLookup(true);
 		System.out.println(dailyQuery(cityCode, stmt));
-		System.out.println(hourlyQuery(cityCode, stmt));
-		System.out.println(alertsQuery(cityCode, stmt));
+		//System.out.println(hourlyQuery(cityCode, stmt));
+		//System.out.println(alertsQuery(cityCode, stmt));
 	}
 }
 
