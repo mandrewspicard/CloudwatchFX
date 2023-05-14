@@ -71,7 +71,9 @@ public class App extends Application implements EventHandler<ActionEvent>{
        button2.setOnAction(this);
        
        button3 = new Button();
+       button3.setText("Check Alerts"); 
        button3.setText("Check Alerts");         
+       button3.setOnAction(e -> System.out.println("Changed to: Check Alerts"));
        //button3.setOnAction(e -> window.setScene(scene2));
        
        button4 = new Button();
@@ -155,9 +157,9 @@ public void handle(ActionEvent event) {
 		System.out.println(" You click to: Hot Location Finder");
 	}
 	
-	if(event.getSource()==button3) {
-		System.out.println(" You click to: Check Alerts");
-	}
+	//if(event.getSource()==button3) {
+	//	System.out.println(" You click to: Check Alerts");
+	//}
 	
 	if(event.getSource()==button4) {
 		System.out.println(" You click to: Refresh Data");
