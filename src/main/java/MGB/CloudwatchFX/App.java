@@ -31,7 +31,7 @@ public class App extends Application{
     		   		
     		FXController controller = loader.getController();
     		
-    		JSONObject weatherData = controller.backend.dailyQuery("san-diego");
+    		JSONObject weatherData = controller.weatherData;
     		controller.day1.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("day").substring(6));
     		controller.day2.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(1).getString("day").substring(6));
     		controller.day3.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(2).getString("day").substring(6));
