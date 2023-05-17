@@ -35,11 +35,19 @@ public class FXController
 	
 	public void swapToAlerts(ActionEvent event) throws IOException
 	{
-		System.out.println("Swapping to Daily");
+		root = FXMLLoader.load(getClass().getResource("Alerts.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);;
+		stage.show();
 	}
 	
 	public void swapToHot(ActionEvent event) throws IOException
 	{
-		System.out.println("Swapping to Daily");
+		root = FXMLLoader.load(getClass().getResource("HotLocation.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);;
+		stage.show();
 	}
 }
