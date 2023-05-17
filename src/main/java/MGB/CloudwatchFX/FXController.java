@@ -2,6 +2,8 @@ package MGB.CloudwatchFX;
 
 import java.io.IOException;
 
+import org.json.JSONObject;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,25 +17,34 @@ import javafx.event.*;
 
 public class FXController
 {
-	Client backend = new Client();
-	Parent root;
-	Stage stage;
-	Scene scene;
+	public Client backend;
+	private Parent root;
+	private Stage stage;
+	private Scene scene;
+	public String cityCode;
 	
 	@FXML
-	private RadioButton weatherSunny, weatherRain, weatherSnow;
+	public RadioButton weatherSunny, weatherRain, weatherSnow;
 	@FXML
-	private Label hotWeatherOut, hotLocationOut, hotTempOut;
+	public Label hotWeatherOut, hotLocationOut, hotTempOut, day1, day2, day3, day4, day5, day6, day7, summary1, summary2, summary3, summary4, summary5, summary6, summary7;
 	@FXML
-	private TextField hotTempIn;
+	public TextField hotTempIn, cityInput;
+	
+	
+	public FXController() throws Exception
+	{
+			backend = new Client();
+			cityCode = "san-diego";
+	}
+
 
 	
-	public void swapToDaily(ActionEvent event) throws IOException
+	public void swapToDaily(ActionEvent event) throws Exception
 	{
 		root = FXMLLoader.load(getClass().getResource("Daily.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);;
+		scene = new Scene(root);		
+		stage.setScene(scene);
 		stage.show();
 	}
 	
@@ -84,12 +95,20 @@ public class FXController
 			
 	}
 	
-	public void changeCity(ActionEvent event) throws IOException
+	public void changeCity(ActionEvent event) throws Exception
 	{
-		
+		JSONObject weatherData = backend.dailyQuery(cityCode);
+		summary1.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("summary"));
 
 
 			
+	}
+	
+	
+	public void updateDaily() throws Exception
+	{
+		JSONObject weatherData = backend.dailyQuery(cityCode);
+		summary1.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("summary"));
 	}
 
 }

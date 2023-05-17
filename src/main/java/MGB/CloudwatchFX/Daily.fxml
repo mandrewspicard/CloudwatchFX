@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #222222; -fx-border-color: #00AAFF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MGB.CloudwatchFX.FXController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #222222; -fx-border-color: #00AAFF;" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MGB.CloudwatchFX.FXController">
    <children>
       <Button layoutX="446.0" layoutY="342.0" mnemonicParsing="false" onAction="#swapToHourly" style="-fx-background-color: #00aaff;" text="Swap to Hourly" textFill="WHITE">
          <font>
@@ -17,81 +17,21 @@
             <Font name="Segoe UI Black" size="25.0" />
          </font>
       </Label>
-      <Label layoutX="27.0" layoutY="64.0" prefHeight="17.0" prefWidth="79.0" text="5/16" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="day1" layoutX="14.0" layoutY="67.0" prefHeight="27.0" prefWidth="56.0" text="Day 1" textAlignment="CENTER" textFill="#00aaff">
          <font>
             <Font name="Segoe UI Semibold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="93.0" layoutY="50.0" prefHeight="17.0" prefWidth="79.0" />
-      <Label layoutX="106.0" layoutY="64.0" prefHeight="17.0" prefWidth="79.0" text="5/17" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Semibold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="185.0" layoutY="64.0" prefHeight="17.0" prefWidth="79.0" text="5/18" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Semibold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="261.0" layoutY="64.0" prefHeight="17.0" prefWidth="79.0" text="5/19" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Semibold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="340.0" layoutY="64.0" prefHeight="17.0" prefWidth="79.0" text="5/20" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Semibold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="419.0" layoutY="64.0" prefHeight="17.0" prefWidth="79.0" text="5/21" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Semibold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="498.0" layoutY="64.0" prefHeight="17.0" prefWidth="79.0" text="5/22" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Semibold" size="18.0" />
-         </font>
-      </Label>
       <Button layoutX="471.0" layoutY="18.0" mnemonicParsing="false" onAction="#changeCity" style="-fx-background-color: #00aaff;" text="Change City" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <TextField layoutX="315.0" layoutY="20.0" text="San Diego" />
-      <Label layoutX="27.0" layoutY="140.0" prefHeight="36.0" prefWidth="54.0" text="78F" textFill="#00aaff">
+      <TextField fx:id="cityInput" layoutX="315.0" layoutY="20.0" text="San Diego" />
+      <Label fx:id="summary1" layoutX="68.0" layoutY="63.0" prefHeight="36.0" prefWidth="530.0" text="Fog in the morning and evening, partly sunny in the afternoon. Temperature 53/64 °F." textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
-            <Font name="Segoe UI Black" size="25.0" />
-         </font>
-      </Label>
-      <Label layoutX="106.0" layoutY="140.0" prefHeight="36.0" prefWidth="54.0" text="78F" textFill="#00aaff">
-         <font>
-            <Font name="Segoe UI Black" size="25.0" />
-         </font>
-      </Label>
-      <Label layoutX="185.0" layoutY="140.0" prefHeight="36.0" prefWidth="54.0" text="78F" textFill="#00aaff">
-         <font>
-            <Font name="Segoe UI Black" size="25.0" />
-         </font>
-      </Label>
-      <Label layoutX="261.0" layoutY="140.0" prefHeight="36.0" prefWidth="54.0" text="78F" textFill="#00aaff">
-         <font>
-            <Font name="Segoe UI Black" size="25.0" />
-         </font>
-      </Label>
-      <Label layoutX="340.0" layoutY="140.0" prefHeight="36.0" prefWidth="54.0" text="78F" textFill="#00aaff">
-         <font>
-            <Font name="Segoe UI Black" size="25.0" />
-         </font>
-      </Label>
-      <Label layoutX="419.0" layoutY="140.0" prefHeight="36.0" prefWidth="54.0" text="78F" textFill="#00aaff">
-         <font>
-            <Font name="Segoe UI Black" size="25.0" />
-         </font>
-      </Label>
-      <Label layoutX="498.0" layoutY="140.0" prefHeight="36.0" prefWidth="54.0" text="78F" textFill="#00aaff">
-         <font>
-            <Font name="Segoe UI Black" size="25.0" />
+            <Font name="Segoe UI Black" size="12.0" />
          </font>
       </Label>
       <Button layoutX="325.0" layoutY="342.0" mnemonicParsing="false" onAction="#swapToAlerts" style="-fx-background-color: #00aaff;" text="Check Alerts" textFill="WHITE">
@@ -104,5 +44,65 @@
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
+      <Label fx:id="day2" layoutX="14.0" layoutY="106.0" prefHeight="27.0" prefWidth="56.0" text="Day 2" textAlignment="CENTER" textFill="#00aaff">
+         <font>
+            <Font name="Segoe UI Semibold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="day3" layoutX="14.0" layoutY="148.0" prefHeight="27.0" prefWidth="56.0" text="Day 3" textAlignment="CENTER" textFill="#00aaff">
+         <font>
+            <Font name="Segoe UI Semibold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="day4" layoutX="14.0" layoutY="187.0" prefHeight="27.0" prefWidth="56.0" text="Day 4" textAlignment="CENTER" textFill="#00aaff">
+         <font>
+            <Font name="Segoe UI Semibold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="day5" layoutX="14.0" layoutY="220.0" prefHeight="27.0" prefWidth="56.0" text="Day 5" textAlignment="CENTER" textFill="#00aaff">
+         <font>
+            <Font name="Segoe UI Semibold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="day6" layoutX="14.0" layoutY="256.0" prefHeight="27.0" prefWidth="56.0" text="Day 6" textAlignment="CENTER" textFill="#00aaff">
+         <font>
+            <Font name="Segoe UI Semibold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="day7" layoutX="14.0" layoutY="298.0" prefHeight="27.0" prefWidth="56.0" text="Day 7" textAlignment="CENTER" textFill="#00aaff">
+         <font>
+            <Font name="Segoe UI Semibold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="summary2" layoutX="68.0" layoutY="102.0" prefHeight="36.0" prefWidth="530.0" text="Fog in the morning and evening, partly sunny in the afternoon. Temperature 53/64 °F." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Segoe UI Black" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="summary3" layoutX="68.0" layoutY="144.0" prefHeight="36.0" prefWidth="530.0" text="Fog in the morning and evening, partly sunny in the afternoon. Temperature 53/64 °F." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Segoe UI Black" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="summary4" layoutX="68.0" layoutY="182.0" prefHeight="36.0" prefWidth="515.0" text="Fog in the morning and evening, partly sunny in the afternoon. Temperature 53/64 °F." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Segoe UI Black" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="summary5" layoutX="68.0" layoutY="216.0" prefHeight="36.0" prefWidth="515.0" text="Fog in the morning and evening, partly sunny in the afternoon. Temperature 53/64 °F." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Segoe UI Black" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="summary6" layoutX="68.0" layoutY="252.0" prefHeight="36.0" prefWidth="515.0" text="Fog in the morning and evening, partly sunny in the afternoon. Temperature 53/64 °F." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Segoe UI Black" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="summary7" layoutX="68.0" layoutY="294.0" prefHeight="36.0" prefWidth="515.0" text="Fog in the morning and evening, partly sunny in the afternoon. Temperature 53/64 °F." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Segoe UI Black" size="12.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

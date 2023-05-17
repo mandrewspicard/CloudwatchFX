@@ -15,8 +15,20 @@ import java.sql.ResultSet;
 
 public class Client
 {
+	
+	private static Statement stmt;
+	
+	public Client() throws Exception
+	{
+	
+    String url = "jdbc:sqlite:./src/main/resources/CloudData.db";
+
+    Connection conn = DriverManager.getConnection(url);
+    stmt  = conn.createStatement();
+    
+	}
 	// Returns a JSon file with daily data for the city
-	public static JSONObject dailyQuery(String cityCode, Statement stmt) throws Exception
+	public static JSONObject dailyQuery(String cityCode) throws Exception
 	{		
 		if (checkSQLdaily(cityCode))
 		{
@@ -38,7 +50,7 @@ public class Client
 	}
 	
 	// Returns a JSon file with hourly data for the city
-	public static JSONObject hourlyQuery(String cityCode, Statement stmt) throws Exception
+	public static JSONObject hourlyQuery(String cityCode) throws Exception
 	{		
 		if (checkSQLdaily(cityCode))
 		{
@@ -60,7 +72,7 @@ public class Client
 	}
 	
 	// Returns a JSon file with hourly data for the city
-	public static JSONObject alertsQuery(String cityCode, Statement stmt) throws Exception
+	public static JSONObject alertsQuery(String cityCode) throws Exception
 	{		
 		if (checkSQLdaily(cityCode))
 		{
@@ -145,18 +157,9 @@ public class Client
 
 	public static void main(String[] args) throws Exception
 	{
-        String url = "jdbc:sqlite:./src/main/resources/CloudData.db";
-
-        Connection conn = DriverManager.getConnection(url);
-        Statement stmt  = conn.createStatement();
-        System.out.println("Connected to database...");
-
-        
-        
+		Client client = new Client();
 		String cityCode = cityCodeLookup(true);
-		System.out.println(dailyQuery(cityCode, stmt).getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("weather"));
-		//System.out.println(hourlyQuery(cityCode, stmt));
-		//System.out.println(alertsQuery(cityCode, stmt));
+		System.out.println(dailyQuery(cityCode).getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("weather"));
 	}
 }
 
