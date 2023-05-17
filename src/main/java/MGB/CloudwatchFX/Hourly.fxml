@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MGB.CloudwatchFX.FXController">
+   <children>
+      <Button layoutX="112.0" layoutY="70.0" mnemonicParsing="false" onAction="#swapToDaily" text="Swap to Daily" />
+   </children>
+</AnchorPane>
