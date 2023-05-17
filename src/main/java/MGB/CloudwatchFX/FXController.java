@@ -80,6 +80,12 @@ public class FXController
 		
 		hotTempOut.setText(hotTempIn.getText() + "°F");
 		hotLocationOut.setText("Utopia");
+			
+	}
+	
+	public void changeCity(ActionEvent event) throws IOException
+	{
+		
 
 
 			

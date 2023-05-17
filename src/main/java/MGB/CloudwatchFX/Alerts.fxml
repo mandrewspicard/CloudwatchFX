@@ -17,7 +17,7 @@
             <Font name="Segoe UI Black" size="25.0" />
          </font>
       </Label>
-      <Button layoutX="471.0" layoutY="18.0" mnemonicParsing="false" onAction="#swapToHourly" style="-fx-background-color: #00aaff;" text="Change City" textFill="WHITE">
+      <Button layoutX="471.0" layoutY="18.0" mnemonicParsing="false" onAction="#changeCity" style="-fx-background-color: #00aaff;" text="Change City" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
