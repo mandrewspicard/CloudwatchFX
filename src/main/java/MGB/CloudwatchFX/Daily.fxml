@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #222222; -fx-border-color: #00AAFF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MGB.CloudwatchFX.FXController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #222222; -fx-border-color: #00AAFF;" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MGB.CloudwatchFX.FXController">
    <children>
       <Button layoutX="446.0" layoutY="342.0" mnemonicParsing="false" onAction="#swapToHourly" style="-fx-background-color: #00aaff;" text="Swap to Hourly" textFill="WHITE">
          <font>
