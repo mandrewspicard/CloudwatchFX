@@ -15,6 +15,7 @@ import javafx.event.*;
 
 public class FXController
 {
+	Client backend = new Client();
 	Parent root;
 	Stage stage;
 	Scene scene;

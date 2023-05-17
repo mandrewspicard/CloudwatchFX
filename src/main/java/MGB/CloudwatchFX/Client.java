@@ -1,8 +1,5 @@
 package MGB.CloudwatchFX;
 
-
-import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.databind.*;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -11,19 +8,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Scanner;
+
+import org.json.JSONObject;
+
 import java.sql.ResultSet;
 
 public class Client
 {
 	// Returns a JSon file with daily data for the city
-	public static JsonNode dailyQuery(String cityCode, Statement stmt) throws Exception
+	public static JSONObject dailyQuery(String cityCode, Statement stmt) throws Exception
 	{		
 		if (checkSQLdaily(cityCode))
 		{
 			 ResultSet rs = stmt.executeQuery("select * from dailyData;");
 			 JsonNode outputJson = new JsonNode(rs.getString("data"));
-			 System.out.print(outputJson);
-			 return outputJson;
+			 return outputJson.getObject();
 		}
 		
 		else
@@ -34,20 +33,18 @@ public class Client
 					.asJson();
 			
 			System.out.println("Didn't find in SQL");
-			System.out.println(response.getBody());
-			return(response.getBody());
+			return(response.getBody().getObject());
 		}
 	}
 	
 	// Returns a JSon file with hourly data for the city
-	public static JsonNode hourlyQuery(String cityCode, Statement stmt) throws Exception
+	public static JSONObject hourlyQuery(String cityCode, Statement stmt) throws Exception
 	{		
 		if (checkSQLdaily(cityCode))
 		{
 			 ResultSet rs = stmt.executeQuery("select * from hourlyData;");
 			 JsonNode outputJson = new JsonNode(rs.getString("data"));
-			 System.out.print(outputJson);
-			 return outputJson;
+			 return outputJson.getObject();
 		}
 		
 		else
@@ -58,19 +55,18 @@ public class Client
 					.asJson();
 			
 			System.out.println("Didn't find in SQL");
-			return(response.getBody());
+			return response.getBody().getObject();
 		}
 	}
 	
 	// Returns a JSon file with hourly data for the city
-	public static JsonNode alertsQuery(String cityCode, Statement stmt) throws Exception
+	public static JSONObject alertsQuery(String cityCode, Statement stmt) throws Exception
 	{		
 		if (checkSQLdaily(cityCode))
 		{
 			 ResultSet rs = stmt.executeQuery("select * from alerts;");
 			 JsonNode outputJson = new JsonNode(rs.getString("data"));
-			 System.out.print(outputJson);
-			 return outputJson;
+			 return outputJson.getObject();
 		}
 		
 		else
@@ -81,7 +77,7 @@ public class Client
 					.asJson();
 			
 			System.out.println("Didn't find in SQL");
-			return(response.getBody());
+			return response.getBody().getObject();
 		}
 	}
 	
@@ -158,7 +154,7 @@ public class Client
         
         
 		String cityCode = cityCodeLookup(true);
-		System.out.println(dailyQuery(cityCode, stmt));
+		System.out.println(dailyQuery(cityCode, stmt).getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("weather"));
 		//System.out.println(hourlyQuery(cityCode, stmt));
 		//System.out.println(alertsQuery(cityCode, stmt));
 	}
