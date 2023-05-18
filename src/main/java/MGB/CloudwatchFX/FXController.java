@@ -41,7 +41,7 @@ public class FXController
 	{
 			backend = new Client();
 			cityCode = "san-diego";
-			weatherData = backend.dailyQuery("cityCode");
+			weatherData = backend.dailyQuery(cityCode);
 	}
 
 
@@ -49,7 +49,7 @@ public class FXController
 	public void swapToDaily(ActionEvent event) throws Exception
 	{
 
-		weatherData = backend.dailyQuery("cityCode");
+		weatherData = backend.dailyQuery(cityCode);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Daily.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
@@ -84,7 +84,7 @@ public class FXController
 	
 	public void swapToHourly(ActionEvent event) throws Exception
 	{
-		weatherData = backend.hourlyQuery("cityCode");
+		weatherData = backend.hourlyQuery(cityCode);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Hourly.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
@@ -126,7 +126,7 @@ public class FXController
 	
 	public void swapToAlerts(ActionEvent event) throws Exception
 	{
-		weatherData = backend.alertsQuery("cityCode");
+		weatherData = backend.alertsQuery(cityCode);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Alerts.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
@@ -177,20 +177,71 @@ public class FXController
 			
 	}
 	
-	public void changeCity(ActionEvent event) throws Exception
+	public void changeCityDaily(ActionEvent event) throws Exception
 	{
-		JSONObject weatherData = backend.dailyQuery(cityCode);
+		cityCode = backend.cityCodeLookup(cityInput.getText());	
+		weatherData = backend.dailyQuery(cityCode);
+		
+		day1.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("day").substring(6));
+		day2.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(1).getString("day").substring(6));
+		day3.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(2).getString("day").substring(6));
+		day4.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(3).getString("day").substring(6));
+		day5.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(4).getString("day").substring(6));
+		day6.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(5).getString("day").substring(6));
+		day7.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(6).getString("day").substring(6));
+		
 		summary1.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("summary"));
-
-
-			
+		summary2.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(1).getString("summary"));
+		summary3.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(2).getString("summary"));
+		summary4.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(3).getString("summary"));
+		summary5.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(4).getString("summary"));
+		summary6.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(5).getString("summary"));
+		summary7.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(6).getString("summary"));
 	}
 	
-	
-	public void updateDaily() throws Exception
+	public void changeCityHourly(ActionEvent event) throws Exception
 	{
-		JSONObject weatherData = backend.dailyQuery(cityCode);
-		summary1.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("summary"));
+		cityCode = backend.cityCodeLookup(cityInput.getText());	
+		weatherData = backend.hourlyQuery(cityCode);
+		
+		time1.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(0).getString("date").substring(11,16));
+		time2.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(1).getString("date").substring(11,16));
+		time3.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(2).getString("date").substring(11,16));
+		time4.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(3).getString("date").substring(11,16));
+		time5.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(4).getString("date").substring(11,16));
+		time6.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(5).getString("date").substring(11,16));
+		time7.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(6).getString("date").substring(11,16));
+		
+		temp1.setText(String.valueOf((int)weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(0).getDouble("temperature")) + "°F");
+		temp2.setText(String.valueOf((int)weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(1).getDouble("temperature")) + "°F");
+		temp3.setText(String.valueOf((int)weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(2).getDouble("temperature")) + "°F");
+		temp4.setText(String.valueOf((int)weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(3).getDouble("temperature")) + "°F");
+		temp5.setText(String.valueOf((int)weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(4).getDouble("temperature")) + "°F");
+		temp6.setText(String.valueOf((int)weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(5).getDouble("temperature")) + "°F");
+		temp7.setText(String.valueOf((int)weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(6).getDouble("temperature")) + "°F");
+		
+		weather1.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(0).getString("summary"));
+		weather2.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(1).getString("summary"));
+		weather3.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(2).getString("summary"));
+		weather4.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(3).getString("summary"));
+		weather5.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(4).getString("summary"));
+		weather6.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(5).getString("summary"));
+		weather7.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(6).getString("summary"));
 	}
-
+	
+	public void changeCityAlerts(ActionEvent event) throws Exception
+	{
+		cityCode = backend.cityCodeLookup(cityInput.getText());
+		weatherData = backend.alertsQuery(cityCode);
+		
+		if (weatherData.getJSONObject("alerts").getJSONArray("data").length() != 0)
+		{
+			String Alerts = "";
+			for (int i = 0; i < weatherData.getJSONObject("alerts").getJSONArray("data").length(); i++)
+			{
+			Alerts += weatherData.getJSONObject("alerts").getJSONArray("data").getJSONObject(i).getString("headline") + "\n";
+			}
+			alertBox.setText(Alerts);
+		}
+	}
 }
