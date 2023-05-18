@@ -32,7 +32,7 @@ public class Client
 		else
 		{
 			HttpResponse<JsonNode> response = Unirest.get("https://ai-weather-by-meteosource.p.rapidapi.com/daily?place_id=" + cityCode + "&language=en&units=auto")
-					.header("X-RapidAPI-Key", "69273f24bfmsh45bc1a50d2ce3b0p1954b4jsn042d58a23a2d")
+					.header("X-RapidAPI-Key", "a15a997526mshbec312fcc154cf1p1ce875jsn9d47aa83f2c4")
 					.header("X-RapidAPI-Host", "ai-weather-by-meteosource.p.rapidapi.com")
 					.asJson();
 			
@@ -61,7 +61,7 @@ public class Client
 		else
 		{
 			HttpResponse<JsonNode> response = Unirest.get("https://ai-weather-by-meteosource.p.rapidapi.com/hourly?place_id=" + cityCode + "&language=en&units=auto")
-					.header("X-RapidAPI-Key", "69273f24bfmsh45bc1a50d2ce3b0p1954b4jsn042d58a23a2d")
+					.header("X-RapidAPI-Key", "a15a997526mshbec312fcc154cf1p1ce875jsn9d47aa83f2c4")
 					.header("X-RapidAPI-Host", "ai-weather-by-meteosource.p.rapidapi.com")
 					.asJson();
 			
@@ -74,7 +74,7 @@ public class Client
 		}
 	}
 	
-	// Returns a JSon file with hourly data for the city
+	// Returns a JSon file with alert data for the city
 	public static JSONObject alertsQuery(String cityCode) throws Exception
 	{	
 
@@ -91,7 +91,7 @@ public class Client
 		else
 		{
 			HttpResponse<JsonNode> response = Unirest.get("https://ai-weather-by-meteosource.p.rapidapi.com/alerts?place_id=" + cityCode + "&language=en&units=auto")
-					.header("X-RapidAPI-Key", "69273f24bfmsh45bc1a50d2ce3b0p1954b4jsn042d58a23a2d")
+					.header("X-RapidAPI-Key", "a15a997526mshbec312fcc154cf1p1ce875jsn9d47aa83f2c4")
 					.header("X-RapidAPI-Host", "ai-weather-by-meteosource.p.rapidapi.com")
 					.asJson();
 			
@@ -120,7 +120,7 @@ public class Client
 		{	
 				String cityInputMod = cityInput.replaceAll(" ", "%20");
 				HttpResponse<JsonNode> response = Unirest.get("https://ai-weather-by-meteosource.p.rapidapi.com/find_places?text=" + cityInputMod + "&language=en")
-						.header("X-RapidAPI-Key", "69273f24bfmsh45bc1a50d2ce3b0p1954b4jsn042d58a23a2d")
+						.header("X-RapidAPI-Key", "a15a997526mshbec312fcc154cf1p1ce875jsn9d47aa83f2c4")
 						.header("X-RapidAPI-Host", "ai-weather-by-meteosource.p.rapidapi.com")
 						.asJson();
 				
@@ -134,6 +134,7 @@ public class Client
 		return cityCode;
 	}
 
+	// For testing only
 	public static void main(String[] args) throws Exception
 	{
 		Client client = new Client();
