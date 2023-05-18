@@ -12,6 +12,8 @@ import org.json.JSONObject;
 
 import java.sql.ResultSet;
 
+
+// This is our backend file, it handles all the SQL and API work
 public class Client
 {
 	

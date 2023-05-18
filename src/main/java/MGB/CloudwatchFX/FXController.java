@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.event.*;
 
+
+// This is the meat of our front end, it handles updating the GUI and making calls to the backend based on the user's actions
 public class FXController
 {
 	public Client backend;
@@ -24,6 +26,8 @@ public class FXController
 	private Scene scene;
 	public String cityCode;
 	
+	
+	// Creates references to the various elements of our UI defined in the FXML files
 	@FXML
 	public RadioButton weatherSunny, weatherRain, weatherSnow;
 	@FXML
@@ -36,7 +40,7 @@ public class FXController
 	
 	
 	
-	
+	// Constructor needed so that our Seven Day Forecast is already populated at launch
 	public FXController() throws Exception
 	{
 			backend = new Client();
@@ -48,9 +52,10 @@ public class FXController
 	// Brings up the Seven Day Forecast view
 	public void swapToDaily(ActionEvent event) throws Exception
 	{
-		// Pulls data from the backend
+		// Asks the backend to convert the user's input into a API readable city code
 		cityCode = backend.cityCodeLookup(cityInput.getText());
 		
+		// Pulls data from the backend for display
 		weatherData = backend.dailyQuery(cityCode);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Daily.fxml"));
 		Parent root = loader.load();
@@ -156,7 +161,7 @@ public class FXController
 		controller.cityInput.setText(cityInput.getText());
 		
 		
-		// There are very rarely any alerts in the data, but there can be multiple
+		// There are very rarely any alerts in the data, but there can be multiple as well.  Code needs to be flexible to handle a variable amount of alerts
 		if (weatherData.getJSONObject("alerts").getJSONArray("data").length() != 0)
 		{
 			// Strings each alert together
@@ -211,6 +216,8 @@ public class FXController
 			destination = backend.hotLocation("Snowing", Double.parseDouble(hotTempIn.getText()));
 		}
 		
+		
+		// Displays the best fit town that the backend could find
 		hotTempOut.setText(destination[1] + "°F");
 		hotLocationOut.setText(destination[0]);
 		hotWeatherOut.setText(destination[2]);
