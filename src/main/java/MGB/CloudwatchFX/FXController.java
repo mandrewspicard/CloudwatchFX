@@ -27,7 +27,7 @@ public class FXController
 	@FXML
 	public RadioButton weatherSunny, weatherRain, weatherSnow;
 	@FXML
-	public Label hotWeatherOut, hotLocationOut, hotTempOut, day1, day2, day3, day4, day5, day6, day7, summary1, summary2, summary3, summary4, summary5, summary6, summary7, alertBox;
+	public Label hotWeatherOut, hotLocationOut, hotTempOut, day1, day2, day3, day4, day5, day6, day7, summary1, summary2, summary3, summary4, summary5, summary6, summary7, alertBox, secretBox;
 	@FXML
 	public Label time1, time2, time3, time4, time5, time6, time7, temp1, temp2, temp3, temp4, temp5, temp6, temp7, weather1, weather2, weather3, weather4, weather5, weather6, weather7;
 	
@@ -160,30 +160,40 @@ public class FXController
 	
 	public void swapToHot(ActionEvent event) throws Exception
 	{
-		root = FXMLLoader.load(getClass().getResource("HotLocation.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("HotLocation.fxml"));
+		Parent root = loader.load();
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
+
+		FXController controller = loader.getController();
+		
+		controller.secretBox.setText(cityInput.getText());
+		
+		
 		stage.show();
 	}
 	
 	public void hotFindIt(ActionEvent event) throws Exception
 	{
+		String[] destination = {};
+		
 		if (weatherSunny.isSelected())
 		{
-			hotWeatherOut.setText("Sunny");
+			destination = backend.hotLocation("Sunny", Double.parseDouble(hotTempIn.getText()));
 		}
 		else if (weatherRain.isSelected())
 		{
-			hotWeatherOut.setText("Raining");
+			destination = backend.hotLocation("Raining", Double.parseDouble(hotTempIn.getText()));
 		}
 		else if (weatherSnow.isSelected())
 		{
-			hotWeatherOut.setText("Snowing");
+			destination = backend.hotLocation("Snowing", Double.parseDouble(hotTempIn.getText()));
 		}
 		
-		hotTempOut.setText(hotTempIn.getText() + "°F");
-		hotLocationOut.setText("Utopia");
+		hotTempOut.setText(destination[1] + "°F");
+		hotLocationOut.setText(destination[0]);
+		hotWeatherOut.setText(destination[2]);
 			
 	}
 	
@@ -254,4 +264,43 @@ public class FXController
 			alertBox.setText(Alerts);
 		}
 	}
+	
+	public void returnToForecast(ActionEvent event) throws Exception
+	{
+		cityCode = backend.cityCodeLookup(secretBox.getText());
+		
+		weatherData = backend.dailyQuery(cityCode);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Daily.fxml"));
+		Parent root = loader.load();
+		Scene scene = new Scene(root);
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		stage.setScene(scene);
+		
+		   		
+		FXController controller = loader.getController();
+		
+		controller.cityInput.setText(secretBox.getText());
+		
+		controller.day1.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("day").substring(6));
+		controller.day2.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(1).getString("day").substring(6));
+		controller.day3.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(2).getString("day").substring(6));
+		controller.day4.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(3).getString("day").substring(6));
+		controller.day5.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(4).getString("day").substring(6));
+		controller.day6.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(5).getString("day").substring(6));
+		controller.day7.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(6).getString("day").substring(6));
+		
+		
+		controller.summary1.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("summary"));
+		controller.summary2.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(1).getString("summary"));
+		controller.summary3.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(2).getString("summary"));
+		controller.summary4.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(3).getString("summary"));
+		controller.summary5.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(4).getString("summary"));
+		controller.summary6.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(5).getString("summary"));
+		controller.summary7.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(6).getString("summary"));
+		
+		
+		
+		stage.show();
+	}
+	
 }

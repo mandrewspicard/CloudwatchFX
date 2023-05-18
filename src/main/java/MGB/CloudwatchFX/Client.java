@@ -16,7 +16,7 @@ public class Client
 {
 	
 	// Returns a JSon file with daily data for the city
-	public static JSONObject dailyQuery(String cityCode) throws Exception
+	public JSONObject dailyQuery(String cityCode) throws Exception
 	{
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:./src/main/resources/CloudData.db");
 		Statement stmt = conn.createStatement();
@@ -25,6 +25,7 @@ public class Client
 		{
 			 JsonNode outputJson = new JsonNode(rs.getString("data"));
 			 stmt.close();
+			 conn.close();
 			 
 			 return outputJson.getObject();
 		}
@@ -46,7 +47,7 @@ public class Client
 	}
 	
 	// Returns a JSon file with hourly data for the city
-	public static JSONObject hourlyQuery(String cityCode) throws Exception
+	public JSONObject hourlyQuery(String cityCode) throws Exception
 	{	
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:./src/main/resources/CloudData.db");
 		Statement stmt = conn.createStatement();
@@ -55,6 +56,8 @@ public class Client
 		{
 			 JsonNode outputJson = new JsonNode(rs.getString("data"));
 			 stmt.close();
+			 conn.close();
+			 
 			 return outputJson.getObject();
 		}
 		
@@ -75,7 +78,7 @@ public class Client
 	}
 	
 	// Returns a JSon file with alert data for the city
-	public static JSONObject alertsQuery(String cityCode) throws Exception
+	public JSONObject alertsQuery(String cityCode) throws Exception
 	{	
 
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:./src/main/resources/CloudData.db");
@@ -84,7 +87,9 @@ public class Client
 		if (rs.next() == true)
 		{
 			 JsonNode outputJson = new JsonNode(rs.getString("data"));
+			 
 			 stmt.close();
+			 conn.close();
 			 return outputJson.getObject();
 		}
 		
@@ -97,9 +102,9 @@ public class Client
 			
 
 			stmt.execute("INSERT INTO alerts(cityCode, data) VALUES ('" + cityCode +"', '" + response.getBody() + "');");
+			
 			stmt.close();
 			conn.close();
-			
 			return(response.getBody().getObject());
 		}
 	}
@@ -133,6 +138,72 @@ public class Client
 		conn.close();
 		return cityCode;
 	}
+	
+	public String[] hotLocation(String weather, double temp) throws Exception
+	{	
+		String bestTown = "";
+		double bestTemp = 9999;
+		String bestSummary = "";
+		double bestFit = 9999;
+		
+		String tempTown = "";
+		double tempTemp = 9999;
+		double tempWeather = 9999;
+		JSONObject tempObj = null;
+		double tempFit = 99999;
+		double weatherFit = 9999;
+		
+		String[] elements = {"Miami", "Austin", "Chicago", "Detroit", "San Diego", "Los Angeles", "New Orleans", "Portland", "San Fransisco", "Juno", "Anchorage", "Tempe"};   
+		for (String s: elements)
+		{
+			tempObj = dailyQuery(cityCodeLookup(s));
+			tempWeather = tempObj.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getDouble("icon");
+			tempTemp = tempObj.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getDouble("temperature");
+			tempTown = s;
+			
+			if (weather == "Sunny")
+			{
+				if (tempWeather == 2 || tempWeather == 3 || tempWeather == 4 || tempWeather == 5 || tempWeather == 6)
+				{
+					weatherFit = 0;
+				}
+				else weatherFit = 15;
+			
+			}
+			else if (weather == "Raining")
+			{
+				if (tempWeather == 10 || tempWeather == 11 || tempWeather == 12 || tempWeather == 13 || tempWeather == 14 || tempWeather == 15)
+				{
+					weatherFit = 0;
+				}
+				else weatherFit = 15;
+			}
+			else if (weather == "Snowing")
+			{
+				if (tempWeather == 16 || tempWeather == 17 || tempWeather == 18 || tempWeather == 19 || tempWeather == 20 || tempWeather == 21 || tempWeather == 22 || tempWeather == 23 || tempWeather == 24 || tempWeather == 25)
+				{
+					weatherFit = 0;
+				}
+				else weatherFit = 15;
+			}
+			
+			tempFit = weatherFit + Math.abs(temp - tempTemp);
+			
+			if (tempFit < bestFit)
+			{
+				bestFit = tempFit;
+				bestTown = tempTown;
+				bestSummary = tempObj.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("summary");
+				bestTemp = tempTemp;
+			}
+		}
+		
+		String[] results = {bestTown, Double.toString(bestTemp), bestSummary};
+		return results;
+
+	}
+
+	
 
 	// For testing only
 	public static void main(String[] args) throws Exception
@@ -140,7 +211,7 @@ public class Client
 		Client client = new Client();
 		String cityCode = client.cityCodeLookup("Los Angeles");
 		System.out.println(cityCode);
-		System.out.println(dailyQuery(cityCode).getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("weather"));
+		System.out.println(client.dailyQuery(cityCode).getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("weather"));
 	}
 }
 

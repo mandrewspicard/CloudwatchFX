@@ -20,7 +20,7 @@
             <Font name="Segoe UI Semibold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="25.0" layoutY="342.0" mnemonicParsing="false" onAction="#swapToDaily" style="-fx-background-color: #00aaff;" text="Return to Forecast" textFill="WHITE">
+      <Button layoutX="432.0" layoutY="18.0" mnemonicParsing="false" onAction="#returnToForecast" style="-fx-background-color: #00aaff;" text="Return to Forecast" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
@@ -54,30 +54,31 @@
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
-      <Label fx:id="hotLocationOut" layoutX="260.0" layoutY="205.0" prefHeight="27.0" prefWidth="91.0" text="-" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="hotLocationOut" layoutX="257.0" layoutY="205.0" prefHeight="27.0" prefWidth="214.0" textFill="WHITE">
          <font>
             <Font name="Segoe UI Semibold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="29.0" layoutY="248.0" prefHeight="27.0" prefWidth="181.0" text="Current Temperature" textAlignment="CENTER" textFill="WHITE">
+      <Label layoutX="29.0" layoutY="248.0" prefHeight="27.0" prefWidth="197.0" text="Current Temperature:" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Black" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="29.0" layoutY="281.0" prefHeight="27.0" prefWidth="181.0" text="Current Summary:" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Black" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="hotTempOut" layoutX="257.0" layoutY="248.0" prefHeight="27.0" prefWidth="214.0" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Segoe UI Semibold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="29.0" layoutY="281.0" prefHeight="27.0" prefWidth="181.0" text="Current Weather" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="hotWeatherOut" layoutX="29.0" layoutY="317.0" prefHeight="57.0" prefWidth="546.0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font name="Segoe UI Semibold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="hotTempOut" layoutX="260.0" layoutY="248.0" prefHeight="27.0" prefWidth="91.0" text="-" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Semibold" size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="hotWeatherOut" layoutX="260.0" layoutY="281.0" prefHeight="27.0" prefWidth="91.0" text="-" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Segoe UI Semibold" size="18.0" />
-         </font>
-      </Label>
+      <Label fx:id="secretBox" layoutX="499.0" layoutY="80.0" text="Secret" textFill="#222222" />
    </children>
 </Pane>
