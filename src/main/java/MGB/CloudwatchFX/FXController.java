@@ -48,7 +48,8 @@ public class FXController
 	
 	public void swapToDaily(ActionEvent event) throws Exception
 	{
-
+		cityCode = backend.cityCodeLookup(cityInput.getText());
+		
 		weatherData = backend.dailyQuery(cityCode);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Daily.fxml"));
 		Parent root = loader.load();
@@ -59,7 +60,8 @@ public class FXController
 		   		
 		FXController controller = loader.getController();
 		
-
+		controller.cityInput.setText(cityInput.getText());
+		
 		controller.day1.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("day").substring(6));
 		controller.day2.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(1).getString("day").substring(6));
 		controller.day3.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(2).getString("day").substring(6));
@@ -84,6 +86,8 @@ public class FXController
 	
 	public void swapToHourly(ActionEvent event) throws Exception
 	{
+		cityCode = backend.cityCodeLookup(cityInput.getText());
+		
 		weatherData = backend.hourlyQuery(cityCode);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Hourly.fxml"));
 		Parent root = loader.load();
@@ -93,6 +97,8 @@ public class FXController
 		
 		   		
 		FXController controller = loader.getController();
+		
+		controller.cityInput.setText(cityInput.getText());
 		
 		controller.time1.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(0).getString("date").substring(11,16));
 		controller.time2.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(1).getString("date").substring(11,16));
@@ -126,6 +132,8 @@ public class FXController
 	
 	public void swapToAlerts(ActionEvent event) throws Exception
 	{
+		cityCode = backend.cityCodeLookup(cityInput.getText());
+		
 		weatherData = backend.alertsQuery(cityCode);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Alerts.fxml"));
 		Parent root = loader.load();
@@ -133,6 +141,8 @@ public class FXController
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		stage.setScene(scene); 		
 		FXController controller = loader.getController();
+		
+		controller.cityInput.setText(cityInput.getText());
 		
 		if (weatherData.getJSONObject("alerts").getJSONArray("data").length() != 0)
 		{
