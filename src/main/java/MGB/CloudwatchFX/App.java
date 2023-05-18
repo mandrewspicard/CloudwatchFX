@@ -19,16 +19,19 @@ public class App extends Application{
     {
     	try
     	{
+    		// Sets up a JavaFX stage
     		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Logo2.jpg")));
     		primaryStage.setResizable(false);
     		primaryStage.setTitle("Cloudwatch");
     		
+    		// Our JavaFX scenes are stored as FXMLs, which are very easy to generate with SceneBuilder
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("Daily.fxml"));
     		Parent root = loader.load();
     		Scene scene = new Scene(root);
     		primaryStage.setScene(scene);
     		
-    		   		
+    		
+    		// Populates the first scene to be shown with data for San Diego
     		FXController controller = loader.getController();
     		
     		JSONObject weatherData = controller.weatherData;

@@ -45,9 +45,10 @@ public class FXController
 	}
 
 
-	
+	// Brings up the Seven Day Forecast view
 	public void swapToDaily(ActionEvent event) throws Exception
 	{
+		// Pulls data from the backend
 		cityCode = backend.cityCodeLookup(cityInput.getText());
 		
 		weatherData = backend.dailyQuery(cityCode);
@@ -60,6 +61,8 @@ public class FXController
 		   		
 		FXController controller = loader.getController();
 		
+		
+		// Updates the fields in the JavaFX GUI
 		controller.cityInput.setText(cityInput.getText());
 		
 		controller.day1.setText(weatherData.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("day").substring(6));
@@ -84,8 +87,10 @@ public class FXController
 		stage.show();
 	}
 	
+	// Changes the view to Hourly Data view
 	public void swapToHourly(ActionEvent event) throws Exception
 	{
+		// Maintains the location from the previous scene
 		cityCode = backend.cityCodeLookup(cityInput.getText());
 		
 		weatherData = backend.hourlyQuery(cityCode);
@@ -98,6 +103,9 @@ public class FXController
 		   		
 		FXController controller = loader.getController();
 		
+		
+
+		// Updates the fields in the JavaFX GUI
 		controller.cityInput.setText(cityInput.getText());
 		
 		controller.time1.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(0).getString("date").substring(11,16));
@@ -108,6 +116,7 @@ public class FXController
 		controller.time6.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(5).getString("date").substring(11,16));
 		controller.time7.setText(weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(6).getString("date").substring(11,16));
 		
+		// Temperature is cast as an Int to remove the decimals for cleaner display
 		controller.temp1.setText(String.valueOf((int)weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(0).getDouble("temperature")) + "°F");
 		controller.temp2.setText(String.valueOf((int)weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(1).getDouble("temperature")) + "°F");
 		controller.temp3.setText(String.valueOf((int)weatherData.getJSONObject("hourly").getJSONArray("data").getJSONObject(2).getDouble("temperature")) + "°F");
@@ -130,6 +139,8 @@ public class FXController
 		stage.show();
 	}
 	
+	
+	// Changes the view to the Alert view
 	public void swapToAlerts(ActionEvent event) throws Exception
 	{
 		cityCode = backend.cityCodeLookup(cityInput.getText());
@@ -144,8 +155,11 @@ public class FXController
 		
 		controller.cityInput.setText(cityInput.getText());
 		
+		
+		// There are very rarely any alerts in the data, but there can be multiple
 		if (weatherData.getJSONObject("alerts").getJSONArray("data").length() != 0)
 		{
+			// Strings each alert together
 			String Alerts = "";
 			for (int i = 0; i < weatherData.getJSONObject("alerts").getJSONArray("data").length(); i++)
 			{
@@ -158,6 +172,8 @@ public class FXController
 		stage.show();
 	}
 	
+	
+	// Swaps to Hot Location Finder view
 	public void swapToHot(ActionEvent event) throws Exception
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("HotLocation.fxml"));
@@ -174,10 +190,14 @@ public class FXController
 		stage.show();
 	}
 	
+	
+	// Actually runs the Hot Location Finder
 	public void hotFindIt(ActionEvent event) throws Exception
 	{
 		String[] destination = {};
 		
+		
+		// Feeds in users weather preference
 		if (weatherSunny.isSelected())
 		{
 			destination = backend.hotLocation("Sunny", Double.parseDouble(hotTempIn.getText()));
@@ -197,6 +217,8 @@ public class FXController
 			
 	}
 	
+	
+	// While the Change City button always does the same thing, depending on the current view different UI elements need to be updated
 	public void changeCityDaily(ActionEvent event) throws Exception
 	{
 		cityCode = backend.cityCodeLookup(cityInput.getText());	
@@ -265,8 +287,11 @@ public class FXController
 		}
 	}
 	
+	
+	// Leaving the Hot Location Finder view always returns to Seven Day Forecast
 	public void returnToForecast(ActionEvent event) throws Exception
 	{
+		// inputCity field does exist on Hot Location, so secret invisible label is used to keep the data safe
 		cityCode = backend.cityCodeLookup(secretBox.getText());
 		
 		weatherData = backend.dailyQuery(cityCode);

@@ -20,6 +20,8 @@ public class Client
 	{
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:./src/main/resources/CloudData.db");
 		Statement stmt = conn.createStatement();
+		
+		// Checks if the desired data is already available on the SQL server
 		ResultSet rs = stmt.executeQuery("select data from dailyData where cityCode = '" + cityCode + "' limit 1;");
 		if (rs.next() == true)
 		{
@@ -32,6 +34,7 @@ public class Client
 		
 		else
 		{
+			// Requests the data from meteosource if it's not already in the SQL database
 			HttpResponse<JsonNode> response = Unirest.get("https://ai-weather-by-meteosource.p.rapidapi.com/daily?place_id=" + cityCode + "&language=en&units=auto")
 					.header("X-RapidAPI-Key", "a15a997526mshbec312fcc154cf1p1ce875jsn9d47aa83f2c4")
 					.header("X-RapidAPI-Host", "ai-weather-by-meteosource.p.rapidapi.com")
@@ -42,6 +45,8 @@ public class Client
 			stmt.close();
 			conn.close();
 			
+			
+			// JSON object is returned
 			return(response.getBody().getObject());
 		}
 	}
@@ -68,7 +73,7 @@ public class Client
 					.header("X-RapidAPI-Host", "ai-weather-by-meteosource.p.rapidapi.com")
 					.asJson();
 			
-
+			// Same idea, just with a different schema
 			stmt.execute("INSERT INTO hourlyData(cityCode, data) VALUES ('" + cityCode +"', '" + response.getBody() + "');");
 			stmt.close();
 			conn.close();
@@ -116,6 +121,8 @@ public class Client
 		String cityCode = "";
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:./src/main/resources/CloudData.db");
 		Statement stmt = conn.createStatement();
+		
+		// SQL database is checked to see if this city has been searched before
 		ResultSet rs = stmt.executeQuery("select * from names where input = '" + cityInput + "' collate NOCASE limit 1;");
 		if (rs.next() == true)
 		{
@@ -123,6 +130,7 @@ public class Client
 		}
 		else
 		{	
+				// If it's not in the SQL database, the name is converted to a cityCode by the API
 				String cityInputMod = cityInput.replaceAll(" ", "%20");
 				HttpResponse<JsonNode> response = Unirest.get("https://ai-weather-by-meteosource.p.rapidapi.com/find_places?text=" + cityInputMod + "&language=en")
 						.header("X-RapidAPI-Key", "a15a997526mshbec312fcc154cf1p1ce875jsn9d47aa83f2c4")
@@ -131,6 +139,8 @@ public class Client
 				
 				cityCode = response.getBody().getArray().getJSONObject(0).getString("place_id");
 				
+				
+				// Name is stored in the SQL so we don't ever have to look it up again
 				stmt.execute("INSERT INTO names(input, name) VALUES ('" + cityInput +"', '" + cityCode + "');");
 		}
 		
@@ -139,8 +149,11 @@ public class Client
 		return cityCode;
 	}
 	
+	// The main function for Hot Location Finder
 	public String[] hotLocation(String weather, double temp) throws Exception
 	{	
+		
+		// Each town is scored based on how well it "fits" the users requirements.  A fit of 0 is a perfect fit
 		String bestTown = "";
 		double bestTemp = 9999;
 		String bestSummary = "";
@@ -153,6 +166,8 @@ public class Client
 		double tempFit = 99999;
 		double weatherFit = 9999;
 		
+		
+		// Prepicked list of possible destinations
 		String[] elements = {"Miami", "Austin", "Chicago", "Detroit", "San Diego", "Los Angeles", "New Orleans", "Portland", "San Fransisco", "Juno", "Anchorage", "Tempe"};   
 		for (String s: elements)
 		{
@@ -161,6 +176,9 @@ public class Client
 			tempTemp = tempObj.getJSONObject("daily").getJSONArray("data").getJSONObject(0).getDouble("temperature");
 			tempTown = s;
 			
+			
+			
+			// Matching the weather is worth 15 degrees of difference
 			if (weather == "Sunny")
 			{
 				if (tempWeather == 2 || tempWeather == 3 || tempWeather == 4 || tempWeather == 5 || tempWeather == 6)
@@ -189,6 +207,7 @@ public class Client
 			
 			tempFit = weatherFit + Math.abs(temp - tempTemp);
 			
+			// Each city's fitness is compared to the current leader, and replaces it if it's better
 			if (tempFit < bestFit)
 			{
 				bestFit = tempFit;
@@ -198,6 +217,7 @@ public class Client
 			}
 		}
 		
+		// The best fit city is returned to the GUI
 		String[] results = {bestTown, Double.toString(bestTemp), bestSummary};
 		return results;
 
@@ -205,7 +225,7 @@ public class Client
 
 	
 
-	// For testing only
+	// For testing only, this main is never called during standard operation
 	public static void main(String[] args) throws Exception
 	{
 		Client client = new Client();
