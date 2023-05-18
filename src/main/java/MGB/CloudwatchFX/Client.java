@@ -95,62 +95,47 @@ public class Client
 	
 	
 	// Finds the city code for a city written in normal English
-	public static String cityCodeLookup(boolean testing) throws Exception
+	public String cityCodeLookup(String cityInput) throws Exception
 	{
-		if (testing == true)
-		{
-			System.out.println("Getting information for San Diego");
-			return("san-diego");
-		}
-
+		String cityCode = "";
+		ResultSet rs = stmt.executeQuery("select * from names where input = '" + cityInput + "' collate NOCASE limit 1;");
+		if (rs.next() == true) cityCode = rs.getString("name");
 		else
-		{
-			Scanner keyboard = new Scanner(System.in);
-			System.out.print("Enter a city name: ");
-			String input = keyboard.nextLine();
-			input = input.replaceAll(" ", "%20");
-			
-			keyboard.close();
-			
-			if (checkSQLname(input) == true)
-			{
-				return("not implemented yet");
-			}
-		
-			else 
-			{
-				HttpResponse<String> response = Unirest.get("https://ai-weather-by-meteosource.p.rapidapi.com/find_places?text=" + input + "&language=en")
+		{	
+				HttpResponse<JsonNode> response = Unirest.get("https://ai-weather-by-meteosource.p.rapidapi.com/find_places?text=" + cityInput + "&language=en")
 						.header("X-RapidAPI-Key", "69273f24bfmsh45bc1a50d2ce3b0p1954b4jsn042d58a23a2d")
 						.header("X-RapidAPI-Host", "ai-weather-by-meteosource.p.rapidapi.com")
-						.asString();
+						.asJson();
 				
-				System.out.println("New town...");
-				return(response.getBody());
-		
-			}
+				cityCode = response.getBody().getObject().getJSONArray("").getJSONObject(0).getString("place_id");
 		}
+		
+		return cityCode;
 	}
+		
 	
 	// Checks if SQL database already has the city code
-	public static boolean checkSQLname(String cityInput)
+	public static boolean checkSQLname(String cityInput) throws Exception
 	{
-		return false;
+		 ResultSet rs = stmt.executeQuery("select * from names where input = " + cityInput + " collate NOCASE;");
+		 if (rs.next() == false) return false;
+		 else return true;
 	}
 	
 	// Checks if SQL database already has the daily information for this city
-	public static boolean checkSQLdaily(String cityInput)
+	public static boolean checkSQLdaily(String cityInput) throws Exception
 	{
 		return true;
 	}
 	
 	// Checks if SQL database already has the hourly information for this city
-	public static boolean checkSQLhourly(String cityInput)
+	public static boolean checkSQLhourly(String cityInput) throws Exception
 	{
 		return true;
 	}
 	
 	// Checks if SQL database already has the hourly information for this city
-	public static boolean checkSQLalerts(String cityInput)
+	public static boolean checkSQLalerts(String cityInput) throws Exception
 	{
 		return true;
 	}
@@ -158,8 +143,9 @@ public class Client
 	public static void main(String[] args) throws Exception
 	{
 		Client client = new Client();
-		String cityCode = cityCodeLookup(true);
-		System.out.println(dailyQuery(cityCode).getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("weather"));
+		String cityCode = client.cityCodeLookup("ur mum");
+		System.out.println(cityCode);
+		//System.out.println(dailyQuery(cityCode).getJSONObject("daily").getJSONArray("data").getJSONObject(0).getString("weather"));
 	}
 }
 
